@@ -43,18 +43,31 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iCZ-pL-nFc">
-                                        <rect key="frame" x="0.0" y="208" width="393" height="561"/>
+                                        <rect key="frame" x="0.0" y="241" width="393" height="561"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="561" id="dtM-pW-0OL"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellIdentifier" id="gxL-cZ-Ddy" customClass="CustomTableViewCell" customModule="iOS_Memo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                                <rect key="frame" x="0.0" y="50" width="393" height="34.333332061767578"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gxL-cZ-Ddy" id="JKO-fe-HhA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="34.333332061767578"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52E-Ma-RgL">
+                                                            <rect key="frame" x="0.0" y="0.0" width="393" height="34.333333333333336"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="52E-Ma-RgL" secondAttribute="trailing" id="GkT-yW-gcp"/>
+                                                        <constraint firstAttribute="bottom" secondItem="52E-Ma-RgL" secondAttribute="bottom" id="Rut-oy-caT"/>
+                                                        <constraint firstItem="52E-Ma-RgL" firstAttribute="leading" secondItem="JKO-fe-HhA" secondAttribute="leading" id="XfG-mR-uSL"/>
+                                                        <constraint firstItem="52E-Ma-RgL" firstAttribute="top" secondItem="JKO-fe-HhA" secondAttribute="top" id="xBp-MM-GlB"/>
+                                                    </constraints>
                                                 </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
@@ -62,7 +75,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="iCZ-pL-nFc" secondAttribute="bottom" constant="83" id="J4e-cU-pYZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="iCZ-pL-nFc" secondAttribute="bottom" constant="50" id="J4e-cU-pYZ"/>
                                     <constraint firstAttribute="trailing" secondItem="iCZ-pL-nFc" secondAttribute="trailing" id="LsP-SA-ln4"/>
                                     <constraint firstItem="iCZ-pL-nFc" firstAttribute="leading" secondItem="ats-L8-yWP" secondAttribute="leading" id="Mcj-OV-I8h"/>
                                     <constraint firstItem="ekF-jW-gvt" firstAttribute="top" secondItem="ats-L8-yWP" secondAttribute="top" constant="50" id="j5v-s3-26a"/>
