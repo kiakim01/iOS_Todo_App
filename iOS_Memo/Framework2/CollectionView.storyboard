@@ -8,40 +8,37 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Next View Controller-->
+        <!--Collection View-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController restorationIdentifier="NextPageViewController" storyboardIdentifier="NextPageViewController" id="Y6W-OH-hqX" customClass="NextViewController" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Y6W-OH-hqX" customClass="CollectionView" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NextPage" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMe-zH-gF4">
-                                <rect key="frame" x="108.66666666666667" y="402.66666666666669" width="175.66666666666663" height="46.666666666666686"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="39"/>
-                                <color key="textColor" systemColor="systemBackgroundColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CollectionView" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbu-Px-Pxf">
+                                <rect key="frame" x="74.666666666666686" y="109" width="244" height="42"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="iMe-zH-gF4" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="AL2-NH-ZrE"/>
-                            <constraint firstItem="iMe-zH-gF4" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="IA5-g9-Bc0"/>
+                            <constraint firstItem="vbu-Px-Pxf" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="FFW-0a-gR4"/>
+                            <constraint firstItem="vbu-Px-Pxf" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="50" id="uYf-FH-3xh"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="72.51908396946564" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="59" y="-55"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
