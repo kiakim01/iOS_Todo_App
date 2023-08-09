@@ -21,11 +21,20 @@ class TodoListPage: UIViewController {
         tableView.reloadData()
     }
     
+    
+    @IBOutlet weak var switchControl: UISwitch!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+
+
     }
 }
 
@@ -47,13 +56,12 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
             cell.contentView.addSubview(textField!)
         }
         
-        //UI에 토글 스위치 추가
+//        //UI에 토글 스위치 추가
         let toggle = UISwitch()
         toggle.isOn = switchStates[indexPath] ?? false
         toggle.onTintColor = .blue
         toggle.addTarget(self, action: #selector(switchDidChange(_:)), for: .valueChanged)
-        
-  // UISwitch의 위치를 계산합니다.
+
         toggle.frame.origin = CGPoint(x: cell.contentView.bounds.width - toggle.bounds.width - 8, y: (cell.contentView.bounds.height - toggle.bounds.height) / 2)
         cell.contentView.addSubview(toggle)
         
@@ -79,8 +87,19 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
     }
     
    // 토글 액션추가
-    @objc func switchDidChange(_ toggleSwitch: UISwitch) {
-        print("Toggle state changed: \(toggleSwitch.isOn)")
+    @objc func switchDidChange(_ sender: UISwitch) {
+        let isSwitchOn = sender.isOn
+        if isSwitchOn {
+            statusLabel.attributedText = NSAttributedString(string: "Switch is ON")
+        } else {
+            let attributedText = NSAttributedString(string: "Switch is OFF", attributes: [
+                NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                NSAttributedString.Key.strikethroughColor: UIColor.black
+            ])
+            statusLabel.attributedText = attributedText
+        }
     }
+
 }
+
 

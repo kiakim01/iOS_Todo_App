@@ -111,15 +111,23 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상태값 Box" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4V-1v-yOp">
+                                        <rect key="frame" x="129" y="271" width="135.33333333333337" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="iCZ-pL-nFc" firstAttribute="width" secondItem="ats-L8-yWP" secondAttribute="width" id="7ci-Lu-cNo"/>
+                                    <constraint firstItem="Z4V-1v-yOp" firstAttribute="centerX" secondItem="ats-L8-yWP" secondAttribute="centerX" id="A7V-nL-LTn"/>
                                     <constraint firstAttribute="trailing" secondItem="iCZ-pL-nFc" secondAttribute="trailing" id="XQC-fg-gev"/>
                                     <constraint firstItem="iCZ-pL-nFc" firstAttribute="centerX" secondItem="KZi-XB-jVQ" secondAttribute="centerX" id="Z8z-5n-zBP"/>
                                     <constraint firstItem="iCZ-pL-nFc" firstAttribute="leading" secondItem="ats-L8-yWP" secondAttribute="leading" id="aZM-DD-ZP6"/>
                                     <constraint firstItem="ekF-jW-gvt" firstAttribute="top" secondItem="ats-L8-yWP" secondAttribute="top" constant="50" id="j5v-s3-26a"/>
                                     <constraint firstAttribute="trailing" secondItem="ekF-jW-gvt" secondAttribute="trailing" id="pgM-ps-etG"/>
+                                    <constraint firstItem="Z4V-1v-yOp" firstAttribute="top" secondItem="tKK-4N-adg" secondAttribute="bottom" constant="29" id="pv8-gv-F6h"/>
                                     <constraint firstItem="iCZ-pL-nFc" firstAttribute="top" secondItem="ekF-jW-gvt" secondAttribute="bottom" constant="100" id="wf1-gx-ufm"/>
                                     <constraint firstItem="ekF-jW-gvt" firstAttribute="leading" secondItem="ats-L8-yWP" secondAttribute="leading" id="wrz-Ag-QdS"/>
                                 </constraints>
@@ -135,6 +143,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="statusLabel" destination="Z4V-1v-yOp" id="pHL-lx-USd"/>
                         <outlet property="tableView" destination="iCZ-pL-nFc" id="6OH-ju-46s"/>
                     </connections>
                 </viewController>
