@@ -20,11 +20,7 @@ class TodoListPage: UIViewController {
         numberOfItems += 1
         tableView.reloadData()
     }
-    
-    
-    @IBOutlet weak var switchControl: UISwitch!
-    @IBOutlet weak var statusLabel: UILabel!
-    
+        
 
     
     override func viewDidLoad() {
@@ -58,7 +54,7 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         
 //        //UI에 토글 스위치 추가
         let toggle = UISwitch()
-        toggle.isOn = switchStates[indexPath] ?? false
+        toggle.isOn = switchStates[indexPath] ?? true
         toggle.onTintColor = .blue
         toggle.addTarget(self, action: #selector(switchDidChange(_:)), for: .valueChanged)
 
@@ -87,18 +83,29 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
     }
     
    // 토글 액션추가
+    //textfield로만 바꿔주면 될것같은데 ...... !
     @objc func switchDidChange(_ sender: UISwitch) {
         let isSwitchOn = sender.isOn
-        if isSwitchOn {
-            statusLabel.attributedText = NSAttributedString(string: "Switch is ON")
-        } else {
-            let attributedText = NSAttributedString(string: "Switch is OFF", attributes: [
-                NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                NSAttributedString.Key.strikethroughColor: UIColor.black
-            ])
-            statusLabel.attributedText = attributedText
+
+        if let cell = sender.superview?.superview as? UITableViewCell,
+           let _ = tableView.indexPath(for: cell),
+           let textField = cell.viewWithTag(123) as? UITextField {
+            
+            if !isSwitchOn {
+                // Apply strike-through effect to the text in the UITextField
+                let attributedText = NSAttributedString(string: textField.text ?? "", attributes: [
+                    NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                    NSAttributedString.Key.strikethroughColor: UIColor.black
+                ])
+                textField.attributedText = attributedText
+            } else {
+                // Remove the strike-through effect from the text
+                let plainText = textField.text ?? ""
+                textField.text = plainText
+            }
         }
     }
+
 
 }
 
