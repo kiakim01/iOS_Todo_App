@@ -83,28 +83,34 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
     }
     
    // 토글 액션추가
-    //textfield로만 바꿔주면 될것같은데 ...... !
+
     @objc func switchDidChange(_ sender: UISwitch) {
         let isSwitchOn = sender.isOn
 
+        // 만약 셀의 뷰 계층 구조 안에서 UISwitch가 변경되었다면
         if let cell = sender.superview?.superview as? UITableViewCell,
            let _ = tableView.indexPath(for: cell),
            let textField = cell.viewWithTag(123) as? UITextField {
-            
+                
+            // 만약 스위치가 OFF 상태라면
             if !isSwitchOn {
-                // Apply strike-through effect to the text in the UITextField
+                // UITextField의 텍스트에 물결표 효과(strike-through)를 적용합니다.
+                // 물결표 효과를 포함한 속성 문자열을 생성하고, 이를 textField의 attributedText로 설정합니다.
                 let attributedText = NSAttributedString(string: textField.text ?? "", attributes: [
                     NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
                     NSAttributedString.Key.strikethroughColor: UIColor.black
                 ])
                 textField.attributedText = attributedText
             } else {
-                // Remove the strike-through effect from the text
-                let plainText = textField.text ?? ""
-                textField.text = plainText
+                // 만약 스위치가 ON 상태라면
+                // UITextField의 텍스트에 적용된 물결표 효과를 제거합니다.
+                // 일반적인 속성을 가진 문자열을 생성하고, 이를 textField의 attributedText로 설정합니다.
+                let attributedText = NSAttributedString(string: textField.text ?? "")
+                textField.attributedText = attributedText
             }
         }
     }
+
 
 
 }
