@@ -40,6 +40,8 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         return numberOfItems
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
@@ -74,6 +76,42 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+//    // 뒤로 밀어서 스와이프 동작 (오른쪽에서 왼쪽으로)
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+//    }
+
+    // 앞으로 밀어서 스와이프 동작 (왼쪽에서 오른쪽으로)
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // 필요한 경우 앞으로 밀어서 스와이프 동작을 생성하고 구성합니다
+        
+        let completeAction = UIContextualAction(style: .destructive, title: "완료") { [weak self] (action, view, completionHandler) in
+            guard self != nil else { return }
+                
+           completionHandler(true)
+            }
+        completeAction.backgroundColor = UIColor.blue
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action, view, completionHandler) in
+                guard let self = self else { return }
+                
+                // 데이터 소스에서 해당 아이템을 삭제하고 테이블 뷰를 업데이트합니다
+                self.switchStates.removeValue(forKey: indexPath) // 필요한 경우에만
+                self.numberOfItems -= 1 // 필요한 경우에만
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                // 삭제 동작을 완료합니다
+                completionHandler(true)
+            }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [completeAction, deleteAction])
+           configuration.performsFirstActionWithFullSwipe = false // 부분적으로 스와이프할 때 두 동작을 모두 표시합니다
+           
+           return configuration
+
+
+    }
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text,
               let row = textField.tag as Int? else {
@@ -87,30 +125,23 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
     @objc func switchDidChange(_ sender: UISwitch) {
         let isSwitchOn = sender.isOn
 
-        // 만약 셀의 뷰 계층 구조 안에서 UISwitch가 변경되었다면
         if let cell = sender.superview?.superview as? UITableViewCell,
            let _ = tableView.indexPath(for: cell),
            let textField = cell.viewWithTag(123) as? UITextField {
-                
-            // 만약 스위치가 OFF 상태라면
+            
             if !isSwitchOn {
-                // UITextField의 텍스트에 물결표 효과(strike-through)를 적용합니다.
-                // 물결표 효과를 포함한 속성 문자열을 생성하고, 이를 textField의 attributedText로 설정합니다.
+                // Apply strike-through effect to the text in the UITextField
                 let attributedText = NSAttributedString(string: textField.text ?? "", attributes: [
                     NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
                     NSAttributedString.Key.strikethroughColor: UIColor.black
                 ])
                 textField.attributedText = attributedText
             } else {
-                // 만약 스위치가 ON 상태라면
-                // UITextField의 텍스트에 적용된 물결표 효과를 제거합니다.
-                // 일반적인 속성을 가진 문자열을 생성하고, 이를 textField의 attributedText로 설정합니다.
                 let attributedText = NSAttributedString(string: textField.text ?? "")
                 textField.attributedText = attributedText
             }
         }
     }
-
 
 
 }

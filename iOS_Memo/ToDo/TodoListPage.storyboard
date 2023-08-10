@@ -94,19 +94,6 @@
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gxL-cZ-Ddy" id="JKO-fe-HhA">
                                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52E-Ma-RgL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="313" height="34"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits"/>
-                                                        </textField>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="52E-Ma-RgL" firstAttribute="top" secondItem="JKO-fe-HhA" secondAttribute="top" id="5tf-yJ-Lzv"/>
-                                                        <constraint firstAttribute="trailing" secondItem="52E-Ma-RgL" secondAttribute="trailing" constant="80" id="82b-bm-n0x"/>
-                                                        <constraint firstItem="52E-Ma-RgL" firstAttribute="top" secondItem="JKO-fe-HhA" secondAttribute="top" id="xBp-MM-GlB"/>
-                                                        <constraint firstItem="52E-Ma-RgL" firstAttribute="leading" secondItem="JKO-fe-HhA" secondAttribute="leading" id="yab-CL-9ck"/>
-                                                    </constraints>
                                                 </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
