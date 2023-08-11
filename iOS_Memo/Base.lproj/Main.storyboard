@@ -9,6 +9,19 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Rcj-Zi-jDV">
+            <objects>
+                <navigationController id="kup-EU-fGd" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2Ga-sB-AYu">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NTe-vm-JFT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-645" y="-35"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -128,10 +141,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BgE-7g-h09">
-                                <rect key="frame" x="136" y="368" width="121" height="35"/>
+                                <rect key="frame" x="140" y="368" width="113" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="완료 목록 확인">
+                                <buttonConfiguration key="configuration" style="plain" title="최최최최최종">
                                     <backgroundConfiguration key="background">
                                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <color key="strokeColor" name="AccentColor"/>
@@ -139,6 +152,9 @@
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
                                     <color key="baseForegroundColor" systemColor="tintColor"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="ZOx-q2-xcc" kind="show" id="a6p-yx-bH2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -196,6 +212,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tu9-Zx-V31" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="634" y="-79"/>
+        </scene>
+        <!--Segmented Control2-->
+        <scene sceneID="FCb-c3-wro">
+            <objects>
+                <viewController id="ZOx-q2-xcc" customClass="SegmentedControl2" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wQd-FX-toP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="qgN-Dc-4tB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4gT-5Z-jeL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fq-bc-OP6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1134" y="-45"/>
         </scene>
         <!--PickerView-->
         <scene sceneID="x1N-co-7nf">

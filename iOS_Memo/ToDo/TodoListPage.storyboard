@@ -8,6 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="LDP-rs-AbI">
+            <objects>
+                <navigationController id="1ck-pq-l12" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Omx-6b-ZIb">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="cWX-E1-C10"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9KM-p5-Wsg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-602" y="-27"/>
+        </scene>
         <!--TodoListPage-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
@@ -31,35 +47,6 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" distribution="equalSpacing" alignment="center" spacing="30" baselineRelativeArrangement="YES" id="RA7-IE-qv8">
                                                 <rect key="frame" x="0.0" y="80" width="393" height="70"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LEv-Aa-x5x">
-                                                        <rect key="frame" x="211.66666666666663" y="18.000000000000004" width="181.33333333333337" height="34.333333333333343"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Complete">
-                                                            <backgroundConfiguration key="background">
-                                                                <color key="strokeColor" systemColor="tintColor"/>
-                                                            </backgroundConfiguration>
-                                                        </buttonConfiguration>
-                                                        <connections>
-                                                            <action selector="CompleteButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="m5F-mI-EQQ"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ja0-KO-ABK">
-                                                        <rect key="frame" x="0.0" y="18.000000000000004" width="181.66666666666666" height="34.333333333333343"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="To do">
-                                                            <backgroundConfiguration key="background">
-                                                                <color key="strokeColor" systemColor="tintColor"/>
-                                                            </backgroundConfiguration>
-                                                        </buttonConfiguration>
-                                                        <connections>
-                                                            <action selector="TodoButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="8iw-BK-fdv"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="ja0-KO-ABK" firstAttribute="leading" secondItem="LEv-Aa-x5x" secondAttribute="trailing" constant="30" id="x7c-fi-85u"/>
-                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -115,12 +102,14 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ats-L8-yWP" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" constant="50" id="AvN-i6-eJ9"/>
                             <constraint firstItem="ats-L8-yWP" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="MGO-E6-U14"/>
                             <constraint firstItem="ats-L8-yWP" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="V3Q-Sp-xSJ"/>
                             <constraint firstAttribute="bottom" secondItem="ats-L8-yWP" secondAttribute="bottom" id="ekt-Nk-Q1y"/>
                             <constraint firstItem="ats-L8-yWP" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="ree-UP-q1s"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="p7L-xn-c7E"/>
                     <connections>
                         <outlet property="tableView" destination="iCZ-pL-nFc" id="6OH-ju-46s"/>
                     </connections>
@@ -129,13 +118,36 @@
             </objects>
             <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
         </scene>
+        <!--Segmented Control-->
+        <scene sceneID="kBb-PN-ORf">
+            <objects>
+                <viewController id="UMc-TY-a3X" customClass="SegmentedControl" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5r7-9R-05U">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Tph-g9-1rE">
+                                <rect key="frame" x="131" y="174" width="131" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="I66-do-utG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5NN-sQ-CMz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UB5-hA-XrR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866.41221374045801" y="-27.464788732394368"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

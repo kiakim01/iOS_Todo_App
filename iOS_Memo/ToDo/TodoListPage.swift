@@ -2,37 +2,67 @@ import UIKit
 
 class TodoListPage: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    var segmentedControl: UISegmentedControl!
     
-    var numberOfItems = 2 // 초기 행 개수
-    var switchStates: [IndexPath: Bool] = [:] // 각 셀의 UISwitch 상태를 저장하는 딕셔너리
-
+    @IBOutlet var tableView: UITableView!
+//    var tavleView: UITableView
+    
+    var numberOfItems = 2 // initial number of rows
+    var switchStates: [IndexPath: Bool] = [:] // Dictionary to store UISwitch states for each cell
     
     @IBAction func TodoButton(_ sender: UIButton) {
-        // TodoButton에 대한 액션 구현
+        // Implementation of action for TodoButton
     }
     
     @IBAction func CompleteButton(_ sender: UIButton) {
-        // CompleteButton에 대한 액션 구현
+        // Implementation of action for CompleteButton
     }
     
     @IBAction func AddButton(_ sender: UIButton) {
         numberOfItems += 1
         tableView.reloadData()
     }
-        
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
         tableView.delegate = self
         tableView.dataSource = self
         
-
-
+        func setupUI() {
+            // Create and configure segmented control
+            segmentedControl = UISegmentedControl(items: ["Todo", "Comlete"])
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(segmentedControl)
+            
+            
+            // Set segmented control constraints
+            NSLayoutConstraint.activate([
+                segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
+                segmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
+            
+            // Create and configure table view
+            tableView = UITableView()
+            tableView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(tableView)
+            
+            // Set table view constraints
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+            
+            // Register cell class or nib if needed
+            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+        }
     }
 }
+
+
+
 
 extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
     
@@ -40,26 +70,22 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         return numberOfItems
     }
     
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         var textField = cell.viewWithTag(123) as? UITextField
         if textField == nil {
             textField = UITextField(frame: CGRect(x: 0, y: 0, width: cell.contentView.bounds.width - 80, height: cell.contentView.bounds.height))
-            textField?.placeholder = "텍스트 입력"
+            textField?.placeholder = "Enter text"
             textField?.tag = 123
             textField?.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             cell.contentView.addSubview(textField!)
         }
         
-//        //UI에 토글 스위치 추가
         let toggle = UISwitch()
         toggle.isOn = switchStates[indexPath] ?? true
         toggle.onTintColor = .blue
         toggle.addTarget(self, action: #selector(switchDidChange(_:)), for: .valueChanged)
-
         toggle.frame.origin = CGPoint(x: cell.contentView.bounds.width - toggle.bounds.width - 8, y: (cell.contentView.bounds.height - toggle.bounds.height) / 2)
         cell.contentView.addSubview(toggle)
         
@@ -76,40 +102,24 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-//    // 뒤로 밀어서 스와이프 동작 (오른쪽에서 왼쪽으로)
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-//    }
-
-    // 앞으로 밀어서 스와이프 동작 (왼쪽에서 오른쪽으로)
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // 필요한 경우 앞으로 밀어서 스와이프 동작을 생성하고 구성합니다
-        
-        let completeAction = UIContextualAction(style: .destructive, title: "완료") { [weak self] (action, view, completionHandler) in
+        let completeAction = UIContextualAction(style: .destructive, title: "Complete") { [weak self] (action, view, completionHandler) in
             guard self != nil else { return }
-                
-           completionHandler(true)
-            }
+            completionHandler(true)
+        }
         completeAction.backgroundColor = UIColor.blue
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] (action, view, completionHandler) in
-                guard let self = self else { return }
-                
-                // 데이터 소스에서 해당 아이템을 삭제하고 테이블 뷰를 업데이트합니다
-                self.switchStates.removeValue(forKey: indexPath) // 필요한 경우에만
-                self.numberOfItems -= 1 // 필요한 경우에만
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                // 삭제 동작을 완료합니다
-                completionHandler(true)
-            }
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+            guard let self = self else { return }
+            self.switchStates.removeValue(forKey: indexPath)
+            self.numberOfItems -= 1
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            completionHandler(true)
+        }
         
         let configuration = UISwipeActionsConfiguration(actions: [completeAction, deleteAction])
-           configuration.performsFirstActionWithFullSwipe = false // 부분적으로 스와이프할 때 두 동작을 모두 표시합니다
-           
-           return configuration
-
-
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -120,17 +130,14 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
         updateText(text, for: IndexPath(row: row, section: 0))
     }
     
-   // 토글 액션추가
-
     @objc func switchDidChange(_ sender: UISwitch) {
         let isSwitchOn = sender.isOn
-
+        
         if let cell = sender.superview?.superview as? UITableViewCell,
-           let _ = tableView.indexPath(for: cell),
+           let indexPath = tableView.indexPath(for: cell),
            let textField = cell.viewWithTag(123) as? UITextField {
             
             if !isSwitchOn {
-                // Apply strike-through effect to the text in the UITextField
                 let attributedText = NSAttributedString(string: textField.text ?? "", attributes: [
                     NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue,
                     NSAttributedString.Key.strikethroughColor: UIColor.black
@@ -142,8 +149,5 @@ extension TodoListPage: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-
-
 }
-
 
