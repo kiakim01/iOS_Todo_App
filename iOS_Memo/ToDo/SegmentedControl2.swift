@@ -200,7 +200,7 @@ extension SegmentedControl2: UITableViewDelegate, UITableViewDataSource {
             guard self != nil else { return }
             completionHandler(true)
         }
-        completeAction.backgroundColor = UIColor.blue
+        completeAction.backgroundColor = UIColor(hex: "187afe")
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
