@@ -29,8 +29,9 @@
 		96D083702A78B69A009267E9 /* NextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D0836F2A78B69A009267E9 /* NextViewController.swift */; };
 		96D083722A78DA7E009267E9 /* PrevPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96D083712A78DA7E009267E9 /* PrevPage.storyboard */; };
 		96DE04E12A84EE6100481A39 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE04E02A84EE6100481A39 /* SegmentedControl.swift */; };
-		96DE04E32A85B21E00481A39 /* SegmentedControl2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE04E22A85B21E00481A39 /* SegmentedControl2.swift */; };
+		96DE04E32A85B21E00481A39 /* UseSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE04E22A85B21E00481A39 /* UseSegmentedControlView.swift */; };
 		96DE798B2A8071FC0062F8A3 /* TodoListPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96DE798A2A8071FC0062F8A3 /* TodoListPage.storyboard */; };
+		96E5AD9D2A8768F800CAFA9D /* UIcolor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E5AD9C2A8768F800CAFA9D /* UIcolor.swift */; };
 		96FB6BDE2A7BB4170097E531 /* TodoListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FB6BDD2A7BB4170097E531 /* TodoListPage.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +60,9 @@
 		96D0836F2A78B69A009267E9 /* NextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextViewController.swift; sourceTree = "<group>"; };
 		96D083712A78DA7E009267E9 /* PrevPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrevPage.storyboard; sourceTree = "<group>"; };
 		96DE04E02A84EE6100481A39 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
-		96DE04E22A85B21E00481A39 /* SegmentedControl2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl2.swift; sourceTree = "<group>"; };
+		96DE04E22A85B21E00481A39 /* UseSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseSegmentedControlView.swift; sourceTree = "<group>"; };
 		96DE798A2A8071FC0062F8A3 /* TodoListPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoListPage.storyboard; sourceTree = "<group>"; };
+		96E5AD9C2A8768F800CAFA9D /* UIcolor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIcolor.swift; sourceTree = "<group>"; };
 		96FB6BDD2A7BB4170097E531 /* TodoListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,7 +145,8 @@
 				96FB6BDD2A7BB4170097E531 /* TodoListPage.swift */,
 				96DE798A2A8071FC0062F8A3 /* TodoListPage.storyboard */,
 				96DE04E02A84EE6100481A39 /* SegmentedControl.swift */,
-				96DE04E22A85B21E00481A39 /* SegmentedControl2.swift */,
+				96DE04E22A85B21E00481A39 /* UseSegmentedControlView.swift */,
+				96E5AD9C2A8768F800CAFA9D /* UIcolor.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -230,12 +233,13 @@
 				96793A9C2A7A23A000885A48 /* PrevPgae.swift in Sources */,
 				96793AAA2A7A6C0900885A48 /* TableView.swift in Sources */,
 				96D083702A78B69A009267E9 /* NextViewController.swift in Sources */,
-				96DE04E32A85B21E00481A39 /* SegmentedControl2.swift in Sources */,
+				96DE04E32A85B21E00481A39 /* UseSegmentedControlView.swift in Sources */,
 				96793AA82A7A6BE000885A48 /* PickerView.swift in Sources */,
 				967976662A7761AA00EC0D04 /* ViewController.swift in Sources */,
 				967976622A7761AA00EC0D04 /* AppDelegate.swift in Sources */,
 				967976642A7761AA00EC0D04 /* SceneDelegate.swift in Sources */,
 				96793AA62A7A6ABE00885A48 /* ScrollView.swift in Sources */,
+				96E5AD9D2A8768F800CAFA9D /* UIcolor.swift in Sources */,
 				96FB6BDE2A7BB4170097E531 /* TodoListPage.swift in Sources */,
 				96DE04E12A84EE6100481A39 /* SegmentedControl.swift in Sources */,
 				96793AAC2A7A6C2300885A48 /* CollectionView.swift in Sources */,

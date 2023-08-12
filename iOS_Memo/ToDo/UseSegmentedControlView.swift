@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+@available(iOS 13.0, *)
 class UseSegmentedControlView:UIViewController{
     
     // MARK: Properties : 프로퍼티가 뭔지 찾아보기
@@ -49,7 +49,7 @@ class UseSegmentedControlView:UIViewController{
         addButton.layer.borderColor = UIColor(hex: "187afe").cgColor
         addButton.layer.borderWidth = 1
         addButton.layer.cornerRadius = 10
-        addButton.addTarget(UseSegmentedControlView.self, action: #selector(addTableCell), for:.touchUpInside)
+        addButton.addTarget(self, action: #selector(addTableCell), for:.touchUpInside)
         return addButton
     }()
     
@@ -62,7 +62,7 @@ class UseSegmentedControlView:UIViewController{
         deleteAllButton.layer.borderColor = UIColor(hex: "187afe").cgColor
         deleteAllButton.layer.borderWidth = 1
         deleteAllButton.layer.cornerRadius = 10
-        deleteAllButton.addTarget(UseSegmentedControlView.self, action: #selector(deleteAllCell), for: .touchUpInside)
+        deleteAllButton.addTarget(self, action: #selector(deleteAllCell), for: .touchUpInside)
         return deleteAllButton
     }()
     
@@ -91,34 +91,13 @@ class UseSegmentedControlView:UIViewController{
         // Register cell class or nib if needed
         firstTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
         seconTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
-
-    }
-
-    
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        
     }
     
-    func showConfirmationAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            // 여기에서 실제 삭제 작업을 수행합니다.
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
     
 }
 
-
+// MARK: - Configure UI
 extension  UseSegmentedControlView{
     func configureUI(){
         self.view.addSubview(self.segmentedControl)
@@ -169,7 +148,7 @@ extension  UseSegmentedControlView{
             firstTableView.bottomAnchor.constraint(equalTo: self.firstView.bottomAnchor),
         ])
         
-    
+        
         NSLayoutConstraint.activate([
             seconTableView.topAnchor.constraint(equalTo: deleteAllButton.bottomAnchor,constant: 20),
             seconTableView.leadingAnchor.constraint(equalTo: self.secondView.leadingAnchor),
@@ -187,7 +166,7 @@ extension  UseSegmentedControlView{
     }
 }
 
-
+// MARK: - TableView
 extension UseSegmentedControlView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -246,9 +225,10 @@ extension UseSegmentedControlView: UITableViewDelegate, UITableViewDataSource {
         return configuration
     }
     
-
+    
 }
 
+// MARK: - Method
 extension UseSegmentedControlView{
     @objc private func didChangeValue(segment: UISegmentedControl) {
         self.shouldHideFirstView = segment.selectedSegmentIndex != 0
@@ -296,22 +276,28 @@ extension UseSegmentedControlView{
             }
         }
     }
-}
-
-
-extension UIColor {
-    convenience init(hex: String, alpha: CGFloat = 1.0) {
-        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-        
-        var rgb: UInt64 = 0
-        
-        Scanner(string: hexSanitized).scanHexInt64(&rgb)
-        
-        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-        let blue = CGFloat(rgb & 0x0000FF) / 255.0
-        
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
+    
+    func showConfirmationAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
 }
+
+
