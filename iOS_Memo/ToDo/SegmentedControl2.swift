@@ -8,7 +8,7 @@
 import UIKit
 
 
-class SegmentedControl2:UIViewController{
+class UseSegmmentedControlView:UIViewController{
     
     var numberOfItems = 3 // initial number of rows
     var switchStates: [IndexPath: Bool] = [:] // Dictionary to store UISwitch states for each cell
@@ -53,33 +53,33 @@ class SegmentedControl2:UIViewController{
         addButton.layer.borderColor = UIColor(hex: "187afe").cgColor
         addButton.layer.borderWidth = 1
         addButton.layer.cornerRadius = 10
-        addButton.addTarget(self, action: #selector(addTableCell), for:.touchUpInside)
+        addButton.addTarget(UseSegmmentedControlView.self, action: #selector(addTableCell), for:.touchUpInside)
         return addButton
     }()
     
-    let deletaAll: UIButton = {
-        let deletaAll = UIButton()
-        deletaAll.setTitle("전체 삭제", for: .normal)
-        deletaAll.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        deletaAll.translatesAutoresizingMaskIntoConstraints = false
-        deletaAll.setTitleColor(UIColor(hex: "187afe"), for: .normal)
-        deletaAll.layer.borderColor = UIColor(hex: "187afe").cgColor
-        deletaAll.layer.borderWidth = 1
-        deletaAll.layer.cornerRadius = 10
-        deletaAll.addTarget(self, action: #selector(deleteAllCell), for: .touchUpInside)
-        return deletaAll
+    let deleteAllButton: UIButton = {
+        let deleteAllButton = UIButton()
+        deleteAllButton.setTitle("전체 삭제", for: .normal)
+        deleteAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        deleteAllButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteAllButton.setTitleColor(UIColor(hex: "187afe"), for: .normal)
+        deleteAllButton.layer.borderColor = UIColor(hex: "187afe").cgColor
+        deleteAllButton.layer.borderWidth = 1
+        deleteAllButton.layer.cornerRadius = 10
+        deleteAllButton.addTarget(UseSegmmentedControlView.self, action: #selector(deleteAllCell), for: .touchUpInside)
+        return deleteAllButton
     }()
     //테이블뷰(1)
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    let firstTableView: UITableView = {
+        let firstTableView = UITableView()
+        firstTableView.translatesAutoresizingMaskIntoConstraints = false
+        return firstTableView
     }()
     //테이블뷰(2)
-    let tableViewSecon: UITableView = {
-        let tableViewSecon = UITableView()
-        tableViewSecon.translatesAutoresizingMaskIntoConstraints = false
-        return tableViewSecon
+    let seconTableView: UITableView = {
+        let seconTableView = UITableView()
+        seconTableView.translatesAutoresizingMaskIntoConstraints = false
+        return seconTableView
     }()
     
     
@@ -92,16 +92,16 @@ class SegmentedControl2:UIViewController{
         self.view.addSubview(self.firstView)
         self.view.addSubview(self.secondView)
         self.firstView.addSubview(addButton)
-        self.firstView.addSubview(tableView)
-        tableView.dataSource = self
-        tableView.delegate = self
-        self.secondView.addSubview(deletaAll)
-        self.secondView.addSubview(tableViewSecon)
-        tableViewSecon.dataSource = self
-        tableViewSecon.delegate = self
+        self.firstView.addSubview(firstTableView)
+        firstTableView.dataSource = self
+        firstTableView.delegate = self
+        self.secondView.addSubview(deleteAllButton)
+        self.secondView.addSubview(seconTableView)
+        seconTableView.dataSource = self
+        seconTableView.delegate = self
+        setLayout()
 
-//CSS part -------------------------
-        //세그먼트 컨트롤
+        func setLayout(){
         NSLayoutConstraint.activate([
             self.segmentedControl.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
             self.segmentedControl.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
@@ -140,33 +140,33 @@ class SegmentedControl2:UIViewController{
         
         //테이블뷰(1)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: self.firstView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.firstView.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.firstView.bottomAnchor),
+            firstTableView.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 20),
+            firstTableView.leadingAnchor.constraint(equalTo: self.firstView.leadingAnchor),
+            firstTableView.trailingAnchor.constraint(equalTo: self.firstView.trailingAnchor),
+            firstTableView.bottomAnchor.constraint(equalTo: self.firstView.bottomAnchor),
         ])
         
         // Register cell class or nib if needed
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+        firstTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
         
         //테이블뷰(2)
        NSLayoutConstraint.activate([
-         
-            tableViewSecon.leadingAnchor.constraint(equalTo: self.secondView.leadingAnchor),
-            tableViewSecon.trailingAnchor.constraint(equalTo: self.secondView.trailingAnchor),
-            tableViewSecon.bottomAnchor.constraint(equalTo: self.secondView.bottomAnchor),
+        seconTableView.topAnchor.constraint(equalTo: deleteAllButton.bottomAnchor,constant: 20),
+        seconTableView.leadingAnchor.constraint(equalTo: self.secondView.leadingAnchor),
+        seconTableView.trailingAnchor.constraint(equalTo: self.secondView.trailingAnchor),
+        seconTableView.bottomAnchor.constraint(equalTo: self.secondView.bottomAnchor),
         ])
-        tableViewSecon.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+        seconTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
     
        //전체 삭제 버튼
         NSLayoutConstraint.activate([
-            deletaAll.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 20),
-            deletaAll.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 20),
-            deletaAll.trailingAnchor.constraint(equalTo: firstView.trailingAnchor, constant: -20),
-            deletaAll.heightAnchor.constraint(equalToConstant: 50)
+            deleteAllButton.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 20),
+            deleteAllButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 20),
+            deleteAllButton.trailingAnchor.constraint(equalTo: firstView.trailingAnchor, constant: -20),
+            deleteAllButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        
+        }
         
         
     }
@@ -183,12 +183,12 @@ class SegmentedControl2:UIViewController{
     @objc func addTableCell(){
    
         numberOfItems += 1
-        tableView.reloadData()
+        firstTableView.reloadData()
         print("여깃지롱 ! ")
     }
     
     @objc func deleteAllCell() {
-        if tableViewSecon.numberOfRows(inSection: 0) == 0 {
+        if seconTableView.numberOfRows(inSection: 0) == 0 {
             showAlert(title: "삭제할 항목 없음", message: "삭제할 항목이 없습니다.")
         } else {
             showConfirmationAlert(title: "삭제 확인", message: "모든 항목을 삭제하시겠습니까?")
@@ -220,7 +220,7 @@ class SegmentedControl2:UIViewController{
 
 
 
-extension SegmentedControl2: UITableViewDelegate, UITableViewDataSource {
+extension UseSegmmentedControlView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfItems
@@ -253,7 +253,7 @@ extension SegmentedControl2: UITableViewDelegate, UITableViewDataSource {
     }
     
     func updateText(_ newText: String, for indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
+        if let cell = firstTableView.cellForRow(at: indexPath) {
             cell.textLabel?.text = newText
         }
     }
@@ -290,7 +290,7 @@ extension SegmentedControl2: UITableViewDelegate, UITableViewDataSource {
         let isSwitchOn = sender.isOn
         
         if let cell = sender.superview?.superview as? UITableViewCell,
-           let indexPath = tableView.indexPath(for: cell),
+           let _ = firstTableView.indexPath(for: cell),
            let textField = cell.viewWithTag(123) as? UITextField {
             
             if !isSwitchOn {
