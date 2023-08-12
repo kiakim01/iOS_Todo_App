@@ -8,41 +8,37 @@
 import UIKit
 
 
-class UseSegmmentedControlView:UIViewController{
+class UseSegmentedControlView:UIViewController{
     
+    // MARK: Properties : 프로퍼티가 뭔지 찾아보기
     var numberOfItems = 3 // initial number of rows
     var switchStates: [IndexPath: Bool] = [:] // Dictionary to store UISwitch states for each cell
+    var shouldHideFirstView: Bool? {
+        didSet {
+            guard let shouldHideFirstView = self.shouldHideFirstView else { return }
+            self.firstView.isHidden = shouldHideFirstView
+            self.secondView.isHidden = !self.firstView.isHidden
+        }
+    }
     
-//인스턴스 선언 Part--------------------------
-    //세그먼트컨트롤
+    // MARK: UI : 얘는 func화 하는게 안되네 ... ? 찾아보자
     let segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Todo", "Complete"])
-         let font = UIFont.systemFont(ofSize: 30)
+        let font = UIFont.systemFont(ofSize: 30)
         control.translatesAutoresizingMaskIntoConstraints = false
         return control
-      }()
-      let firstView: UIView = {
+    }()
+    let firstView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .green
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-      }()
-      let secondView: UIView = {
+    }()
+    let secondView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-      }()
-      
-      var shouldHideFirstView: Bool? {
-        didSet {
-          guard let shouldHideFirstView = self.shouldHideFirstView else { return }
-          self.firstView.isHidden = shouldHideFirstView
-          self.secondView.isHidden = !self.firstView.isHidden
-        }
-      }
-    //라벨
-
+    }()
+    
     
     let addButton : UIButton = {
         let addButton = UIButton()
@@ -53,7 +49,7 @@ class UseSegmmentedControlView:UIViewController{
         addButton.layer.borderColor = UIColor(hex: "187afe").cgColor
         addButton.layer.borderWidth = 1
         addButton.layer.cornerRadius = 10
-        addButton.addTarget(UseSegmmentedControlView.self, action: #selector(addTableCell), for:.touchUpInside)
+        addButton.addTarget(UseSegmentedControlView.self, action: #selector(addTableCell), for:.touchUpInside)
         return addButton
     }()
     
@@ -66,16 +62,15 @@ class UseSegmmentedControlView:UIViewController{
         deleteAllButton.layer.borderColor = UIColor(hex: "187afe").cgColor
         deleteAllButton.layer.borderWidth = 1
         deleteAllButton.layer.cornerRadius = 10
-        deleteAllButton.addTarget(UseSegmmentedControlView.self, action: #selector(deleteAllCell), for: .touchUpInside)
+        deleteAllButton.addTarget(UseSegmentedControlView.self, action: #selector(deleteAllCell), for: .touchUpInside)
         return deleteAllButton
     }()
-    //테이블뷰(1)
+    
     let firstTableView: UITableView = {
         let firstTableView = UITableView()
         firstTableView.translatesAutoresizingMaskIntoConstraints = false
         return firstTableView
     }()
-    //테이블뷰(2)
     let seconTableView: UITableView = {
         let seconTableView = UITableView()
         seconTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,24 +79,62 @@ class UseSegmmentedControlView:UIViewController{
     
     
     
- //UI에 그려주는 Part--------------------------
+    // MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
+        firstTableView.dataSource = self
+        firstTableView.delegate = self
+        seconTableView.dataSource = self
+        seconTableView.delegate = self
+        // Register cell class or nib if needed
+        firstTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+        seconTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
+
+    }
+
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showConfirmationAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            // 여기에서 실제 삭제 작업을 수행합니다.
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+}
+
+
+extension  UseSegmentedControlView{
+    func configureUI(){
         self.view.addSubview(self.segmentedControl)
         self.view.addSubview(self.firstView)
         self.view.addSubview(self.secondView)
+        self.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
+        self.segmentedControl.selectedSegmentIndex = 0
+        self.didChangeValue(segment: self.segmentedControl)
         self.firstView.addSubview(addButton)
         self.firstView.addSubview(firstTableView)
-        firstTableView.dataSource = self
-        firstTableView.delegate = self
         self.secondView.addSubview(deleteAllButton)
         self.secondView.addSubview(seconTableView)
-        seconTableView.dataSource = self
-        seconTableView.delegate = self
         setLayout()
-
-        func setLayout(){
+    }
+    
+    func setLayout(){
         NSLayoutConstraint.activate([
             self.segmentedControl.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16),
             self.segmentedControl.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16),
@@ -122,13 +155,6 @@ class UseSegmmentedControlView:UIViewController{
             self.secondView.topAnchor.constraint(equalTo: self.firstView.topAnchor),
         ])
         
-        self.segmentedControl.addTarget(self, action: #selector(didChangeValue(segment:)), for: .valueChanged)
-        
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.didChangeValue(segment: self.segmentedControl)
-        
-        
-        //추가하기 버튼
         NSLayoutConstraint.activate([
             addButton.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 20),
             addButton.leadingAnchor.constraint(equalTo: firstView.leadingAnchor, constant: 20),
@@ -136,9 +162,6 @@ class UseSegmmentedControlView:UIViewController{
             addButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        
-        
-        //테이블뷰(1)
         NSLayoutConstraint.activate([
             firstTableView.topAnchor.constraint(equalTo: addButton.bottomAnchor, constant: 20),
             firstTableView.leadingAnchor.constraint(equalTo: self.firstView.leadingAnchor),
@@ -146,19 +169,14 @@ class UseSegmmentedControlView:UIViewController{
             firstTableView.bottomAnchor.constraint(equalTo: self.firstView.bottomAnchor),
         ])
         
-        // Register cell class or nib if needed
-        firstTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
-        
-        //테이블뷰(2)
-       NSLayoutConstraint.activate([
-        seconTableView.topAnchor.constraint(equalTo: deleteAllButton.bottomAnchor,constant: 20),
-        seconTableView.leadingAnchor.constraint(equalTo: self.secondView.leadingAnchor),
-        seconTableView.trailingAnchor.constraint(equalTo: self.secondView.trailingAnchor),
-        seconTableView.bottomAnchor.constraint(equalTo: self.secondView.bottomAnchor),
-        ])
-        seconTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CellIdentifier")
     
-       //전체 삭제 버튼
+        NSLayoutConstraint.activate([
+            seconTableView.topAnchor.constraint(equalTo: deleteAllButton.bottomAnchor,constant: 20),
+            seconTableView.leadingAnchor.constraint(equalTo: self.secondView.leadingAnchor),
+            seconTableView.trailingAnchor.constraint(equalTo: self.secondView.trailingAnchor),
+            seconTableView.bottomAnchor.constraint(equalTo: self.secondView.bottomAnchor),
+        ])
+        
         NSLayoutConstraint.activate([
             deleteAllButton.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 20),
             deleteAllButton.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: 20),
@@ -166,61 +184,11 @@ class UseSegmmentedControlView:UIViewController{
             deleteAllButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        }
-        
-        
     }
-    
-
-    
+}
 
 
-    
-      @objc private func didChangeValue(segment: UISegmentedControl) {
-        self.shouldHideFirstView = segment.selectedSegmentIndex != 0
-      }
-    
-    @objc func addTableCell(){
-   
-        numberOfItems += 1
-        firstTableView.reloadData()
-        print("여깃지롱 ! ")
-    }
-    
-    @objc func deleteAllCell() {
-        if seconTableView.numberOfRows(inSection: 0) == 0 {
-            showAlert(title: "삭제할 항목 없음", message: "삭제할 항목이 없습니다.")
-        } else {
-            showConfirmationAlert(title: "삭제 확인", message: "모든 항목을 삭제하시겠습니까?")
-        }
-    }
-
-    func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func showConfirmationAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .default, handler: nil)
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            // 여기에서 실제 삭제 작업을 수행합니다.
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-
- }
-
-
-
-extension UseSegmmentedControlView: UITableViewDelegate, UITableViewDataSource {
+extension UseSegmentedControlView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfItems
@@ -278,6 +246,29 @@ extension UseSegmmentedControlView: UITableViewDelegate, UITableViewDataSource {
         return configuration
     }
     
+
+}
+
+extension UseSegmentedControlView{
+    @objc private func didChangeValue(segment: UISegmentedControl) {
+        self.shouldHideFirstView = segment.selectedSegmentIndex != 0
+    }
+    
+    @objc func addTableCell(){
+        
+        numberOfItems += 1
+        firstTableView.reloadData()
+        print("여깃지롱 ! ")
+    }
+    
+    @objc func deleteAllCell() {
+        if seconTableView.numberOfRows(inSection: 0) == 0 {
+            showAlert(title: "삭제할 항목 없음", message: "삭제할 항목이 없습니다.")
+        } else {
+            showConfirmationAlert(title: "삭제 확인", message: "모든 항목을 삭제하시겠습니까?")
+        }
+    }
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text,
               let row = textField.tag as Int? else {
@@ -312,15 +303,15 @@ extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-
+        
         var rgb: UInt64 = 0
-
+        
         Scanner(string: hexSanitized).scanHexInt64(&rgb)
-
+        
         let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
         let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
         let blue = CGFloat(rgb & 0x0000FF) / 255.0
-
+        
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 }

@@ -213,10 +213,10 @@
             </objects>
             <point key="canvasLocation" x="634" y="-79"/>
         </scene>
-        <!--Use Segmmented Control View-->
+        <!--Use Segmented Control View-->
         <scene sceneID="FCb-c3-wro">
             <objects>
-                <viewController id="ZOx-q2-xcc" customClass="UseSegmmentedControlView" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZOx-q2-xcc" customClass="UseSegmentedControlView" customModule="iOS_Memo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wQd-FX-toP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
