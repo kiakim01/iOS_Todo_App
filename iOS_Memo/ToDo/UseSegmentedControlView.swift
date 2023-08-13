@@ -20,6 +20,9 @@ class UseSegmentedControlView:UIViewController{
             self.secondView.isHidden = !self.firstView.isHidden
         }
     }
+    //조금만 더 자세히 알고 넘어가기
+    var nextAvailableId: Int = (TaskList.list.last?.id ?? -1) + 1
+    
     
     // MARK: UI : 얘는 func화 하는게 안되네 ... ? 찾아보자
     let segmentedControl: UISegmentedControl = {
@@ -229,7 +232,7 @@ extension UseSegmentedControlView: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - Method
-extension UseSegmentedControlView{
+extension UseSegmentedControlView : UITextFieldDelegate{
     @objc private func didChangeValue(segment: UISegmentedControl) {
         self.shouldHideFirstView = segment.selectedSegmentIndex != 0
     }
@@ -250,12 +253,42 @@ extension UseSegmentedControlView{
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        guard let text = textField.text,
-              let row = textField.tag as Int? else {
+ //  let addAction = UIAlertAction(title: "추가",
+        //                                      style: .default) { [weak self] _ in
+        // 🔥  위 샘플코드처럼 사용자의 enter를 감지하는 메소드를 사용할수는 없을까?
+        guard let cell = textField.superview?.superview as? UITableViewCell,
+              let indexPath = firstTableView.indexPath(for: cell),
+              let title = textField.text,
+              !title.isEmpty else {
             return
         }
-        updateText(text, for: IndexPath(row: row, section: 0))
+        
+        //🔥 Bug: Id가 계속카운트 되는 문제가 있음.... !
+//        print("Contents of TaskList:")
+//        for task in TaskList.list {
+//            print("ID:", task.id)
+//            print("Title:", task.title)
+//            print("Is Completed:", task.isCompleted)
+//            print("---")
+//        }
+        let newItem = Task(id: nextAvailableId,
+                           title: title,
+                           isCompleted: false)
+        // TaskList.list에 새로운 항목을 추가합니다.
+        TaskList.list.append(newItem)
+        nextAvailableId += 1
+        
+//        print("check_NewItem",newItem)
+        
+        // 해당 행을 추가하고자 하는 테이블 뷰에 따라 처리합니다.
+        // 적절한 테이블 뷰를 선택하여 새로운 행을 삽입합니다.
+        if firstTableView.isDescendant(of: cell) {
+            firstTableView.insertRows(at: [IndexPath(row: TaskList.list.count - 1, section: 0)], with: .automatic)
+        } else if seconTableView.isDescendant(of: cell) {
+            seconTableView.insertRows(at: [IndexPath(row: TaskList.list.count - 1, section: 0)], with: .automatic)
+        }
     }
+    
     
     @objc func switchDidChange(_ sender: UISwitch) {
         let isSwitchOn = sender.isOn
